@@ -53,7 +53,11 @@ typedef enum _MGTwitterRequestType {
 	MGTwitterUserListCreate,
 	MGTwitterUserListDelete,
 	MGTwitterUserListSubscribe,
-	MGTwitterUserListUnsubscribe,	
+	MGTwitterUserListUnsubscribe,
+	MGTwitterUserListMembersRequest,
+	MGTwitterUserListMembersAdd,	
+	MGTwitterUserListMembersRemove,
+	MGTwitterUserListMembersCheck,
 #if YAJL_AVAILABLE || TOUCHJSON_AVAILABLE
 	MGTwitterSearchRequest, // performing a search
 	MGTwitterSearchCurrentTrendsRequest, // getting the current trends

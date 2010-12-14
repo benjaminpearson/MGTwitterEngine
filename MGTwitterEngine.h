@@ -164,6 +164,15 @@
 - (NSString *)subscribeListForUser:(NSString *)username withID:(MGTwitterEngineID)listID;
 - (NSString *)unsubscribeListForUser:(NSString *)username withID:(MGTwitterEngineID)listID;
 
+// List Member methods
+
+// List all the members of the specified list
+- (NSString *)getListMembersForUser:(NSString *)username withID:(MGTwitterEngineID)listID;
+- (NSString *)addListMember:(MGTwitterEngineID)memberID forUser:(NSString *)username withID:(MGTwitterEngineID)listID;
+- (NSString *)addListMembers:(NSArray *)members listType:(NSString *)listType forUser:(NSString *)username withID:(MGTwitterEngineID)listID;
+- (NSString *)removeListMember:(MGTwitterEngineID)memberID forUser:(NSString *)username withID:(MGTwitterEngineID)listID;
+- (NSString *)checkListMember:(MGTwitterEngineID)memberID forUser:(NSString *)username withID:(MGTwitterEngineID)listID;
+
 // Direct Message methods
 
 - (NSString *)getDirectMessagesSinceID:(MGTwitterEngineID)sinceID startingAtPage:(int)pageNum; // direct_messages

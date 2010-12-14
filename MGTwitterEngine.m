@@ -1732,6 +1732,104 @@
                            responseType:MGTwitterUserLists];
 }
 
+#pragma mark List Members
+
+- (NSString *)getListMembersForUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/%llu/members.%@", username, listID, API_FORMAT];
+	
+    NSString *body = [self _queryStringWithBase:nil parameters:nil prefixed:NO];
+    
+    return [self _sendRequestWithMethod:nil path:path 
+                        queryParameters:nil body:body 
+                            requestType:MGTwitterUserListMembersRequest
+                           responseType:MGTwitterUserLists];
+}
+
+- (NSString *)addListMember:(MGTwitterEngineID)memberID forUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!memberID || !username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/%llu/members.%@", username, listID, API_FORMAT];
+	
+	NSMutableDictionary *queryParameters = [NSMutableDictionary dictionaryWithCapacity:0];
+	[queryParameters setObject:[NSString stringWithFormat:@"%llu", memberID] forKey:@"id"];
+	
+    NSString *body = [self _queryStringWithBase:nil parameters:queryParameters prefixed:NO];
+    
+    return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 
+                        queryParameters:queryParameters body:body 
+                            requestType:MGTwitterUserListMembersAdd
+                           responseType:MGTwitterUserLists];
+}
+
+- (NSString *)addListMembers:(NSArray *)members listType:(NSString *)listType forUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!members || !listType || !username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	
+	if (!([listType isEqualToString:@"user_id"] || [listType isEqualToString:@"screen_name"])) {
+		NSLog(@"type parameter must be either 'user_id' or 'screen_name'");
+		return nil;
+	}
+		
+	NSString *path = [NSString stringWithFormat:@"%@/%llu/members/create_all.%@", username, listID, API_FORMAT];
+	
+	NSMutableDictionary *queryParameters = [NSMutableDictionary dictionaryWithCapacity:0];
+	[queryParameters setObject:[members componentsJoinedByString:@","] forKey:listType];
+	
+	NSString *body = [self _queryStringWithBase:nil parameters:queryParameters prefixed:NO];
+
+	return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 
+						queryParameters:queryParameters body:body 
+							requestType:MGTwitterUserListMembersAdd
+						   responseType:MGTwitterUserLists];
+}
+
+- (NSString *)removeListMember:(MGTwitterEngineID)memberID forUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!memberID || !username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/%llu/members.%@", username, listID, API_FORMAT];
+	
+	NSMutableDictionary *queryParameters = [NSMutableDictionary dictionaryWithCapacity:0];
+	[queryParameters setObject:[NSString stringWithFormat:@"%llu", memberID] forKey:@"id"];
+	[queryParameters setObject:@"DELETE" forKey:@"_method"];	
+	
+    NSString *body = [self _queryStringWithBase:nil parameters:queryParameters prefixed:NO];
+    
+    return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 
+                        queryParameters:queryParameters body:body 
+                            requestType:MGTwitterUserListMembersRemove
+                           responseType:MGTwitterUserLists];
+}
+
+- (NSString *)checkListMember:(MGTwitterEngineID)memberID forUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!memberID || !username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/%llu/members/%llu.%@", username, listID, memberID, API_FORMAT];
+	
+    NSString *body = [self _queryStringWithBase:nil parameters:nil prefixed:NO];
+    
+    return [self _sendRequestWithMethod:nil path:path 
+                        queryParameters:nil body:body 
+                            requestType:MGTwitterUserListMembersCheck
+                           responseType:MGTwitterUser];
+}
+
 #pragma mark Friendship methods
 
 

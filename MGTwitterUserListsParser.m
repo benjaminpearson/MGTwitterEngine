@@ -21,12 +21,12 @@
     //NSLog(@"Started element: %@ (%@)", elementName, attributeDict);
     [self setLastOpenedElement:elementName];
     
-    if ([elementName isEqualToString:@"list"]) {
+    if ([elementName isEqualToString:@"list"] || [elementName isEqualToString:@"users_list"]) {
         // Make new entry in parsedObjects.
         NSMutableDictionary *newNode = [NSMutableDictionary dictionaryWithCapacity:0];
         [parsedObjects addObject:newNode];
         currentNode = newNode;
-    } else if ([elementName isEqualToString:@"user"]) {
+    } else if ([elementName isEqualToString:@"user"] || [elementName isEqualToString:@"users"]) {
         // Add a 'user' dictionary to current node.
         NSMutableDictionary *newNode = [NSMutableDictionary dictionaryWithCapacity:0];
         [currentNode setObject:newNode forKey:elementName];
@@ -42,12 +42,12 @@
 {
     [super parser:theParser didEndElement:elementName namespaceURI:namespaceURI qualifiedName:qName];
 
-    if ([elementName isEqualToString:@"list"]) {
+    if ([elementName isEqualToString:@"list"] || [elementName isEqualToString:@"users_list"]) {
         currentNode = [parsedObjects lastObject];
-    } else if ([elementName isEqualToString:@"user"]) {
+    } else if ([elementName isEqualToString:@"user"] || [elementName isEqualToString:@"users"]) {
         [self addSource];
         currentNode = nil;
-    }
+	}
 }
 
 
