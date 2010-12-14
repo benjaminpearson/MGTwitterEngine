@@ -1697,6 +1697,39 @@
                            responseType:MGTwitterUserLists];
 }
 
+- (NSString *)getListStatusesForUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+    return [self getListStatusesForUser:username withID:listID sinceID:0 withMaximumID:0 startingAtPage:0 perPage:0]; // zero means default
+}
+
+- (NSString *)getListStatusesForUser:(NSString *)username withID:(MGTwitterEngineID)listID sinceID:(MGTwitterEngineID)sinceID withMaximumID:(MGTwitterEngineID)maxID startingAtPage:(int)page perPage:(int)perPage 
+{
+	if (!username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/lists/%llu/statuses.%@", username, listID, API_FORMAT];
+	
+	NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (sinceID > 0) {
+        [params setObject:[NSString stringWithFormat:@"%llu", sinceID] forKey:@"since_id"];
+    }
+    if (maxID > 0) {
+        [params setObject:[NSString stringWithFormat:@"%llu", maxID] forKey:@"max_id"];
+    }
+    if (page > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
+    }
+    if (perPage > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", perPage] forKey:@"per_page"];
+    }
+	    
+    return [self _sendRequestWithMethod:nil path:path 
+                        queryParameters:params body:nil 
+                            requestType:MGTwitterUserListStatuses
+                           responseType:MGTwitterStatuses];
+}
+
 - (NSString *)subscribeListForUser:(NSString *)username withID:(MGTwitterEngineID)listID
 {
 	if (!username || !listID) {

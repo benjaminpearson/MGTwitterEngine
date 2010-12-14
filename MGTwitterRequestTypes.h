@@ -52,6 +52,7 @@ typedef enum _MGTwitterRequestType {
 	MGTwitterUserListsRequest,
 	MGTwitterUserListCreate,
 	MGTwitterUserListDelete,
+	MGTwitterUserListStatuses,
 	MGTwitterUserListSubscribe,
 	MGTwitterUserListUnsubscribe,
 	MGTwitterUserListMembersRequest,
