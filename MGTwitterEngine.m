@@ -729,6 +729,7 @@
     switch (responseType) {
         case MGTwitterStatuses:
         case MGTwitterStatus:
+        case MGTwitterMentions:			
             [MGTwitterStatusesYAJLParser parserWithJSON:jsonData delegate:self 
                               connectionIdentifier:identifier requestType:requestType 
                                       responseType:responseType URL:URL deliveryOptions:_deliveryOptions];
@@ -793,6 +794,7 @@
     switch (responseType) {
         case MGTwitterStatuses:
         case MGTwitterStatus:
+        case MGTwitterMentions:			
             [MGTwitterStatusesLibXMLParser parserWithXML:xmlData delegate:self 
                               connectionIdentifier:identifier requestType:requestType 
                                       responseType:responseType URL:URL];
@@ -831,6 +833,7 @@
     switch (responseType) {
         case MGTwitterStatuses:
         case MGTwitterStatus:
+        case MGTwitterMentions:			
             [MGTwitterStatusesParser parserWithXML:xmlData delegate:self 
                               connectionIdentifier:identifier requestType:requestType 
                                       responseType:responseType];
@@ -927,6 +930,10 @@
 			if ([self _isValidDelegateForSelector:@selector(accessTokenReceived:forRequest:)] && [parsedObjects count] > 0)
 				[_delegate accessTokenReceived:[parsedObjects objectAtIndex:0]
 									forRequest:identifier];
+			break;
+        case MGTwitterMentions:
+			if ([self _isValidDelegateForSelector:@selector(mentionsReceived:forRequest:)])
+				[_delegate mentionsReceived:parsedObjects forRequest:identifier];
 			break;
         default:
             break;
@@ -1333,6 +1340,44 @@
                             requestType:MGTwitterRepliesRequest 
                            responseType:MGTwitterStatuses];
 }
+
+#pragma mark -
+
+
+- (NSString *)getMentionsStartingAtPage:(int)page
+{
+    return [self getMentionsSinceID:0 startingAtPage:page count:0]; // zero means default
+}
+
+- (NSString *)getMentionsSinceID:(MGTwitterEngineID)sinceID startingAtPage:(int)page count:(int)count
+{
+    return [self getMentionsSinceID:sinceID withMaximumID:0 startingAtPage:page count:count];
+}
+
+- (NSString *)getMentionsSinceID:(MGTwitterEngineID)sinceID withMaximumID:(MGTwitterEngineID)maxID startingAtPage:(int)page count:(int)count
+{
+	NSString *path = [NSString stringWithFormat:@"statuses/mentions.%@", API_FORMAT];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (sinceID > 0) {
+        [params setObject:[NSString stringWithFormat:@"%llu", sinceID] forKey:@"since_id"];
+    }
+    if (maxID > 0) {
+        [params setObject:[NSString stringWithFormat:@"%llu", maxID] forKey:@"max_id"];
+    }
+    if (page > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
+    }
+    if (count > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
+    }
+    
+    return [self _sendRequestWithMethod:nil path:path 
+						queryParameters:params body:nil 
+                            requestType:MGTwitterMentionsRequest 
+                           responseType:MGTwitterMentions];
+}
+
 
 #pragma mark -
 

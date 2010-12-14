@@ -112,9 +112,14 @@
 - (NSString *)sendUpdate:(NSString *)status inReplyTo:(MGTwitterEngineID)updateID withLatitude:(MGTwitterEngineLocationDegrees)latitude longitude:(MGTwitterEngineLocationDegrees)longitude; // statuses/update
 - (NSString *)sendRetweet:(MGTwitterEngineID)tweetID; // statuses/retweet
 
-- (NSString *)getRepliesStartingAtPage:(int)pageNum; // statuses/mentions
-- (NSString *)getRepliesSinceID:(MGTwitterEngineID)sinceID startingAtPage:(int)pageNum count:(int)count; // statuses/mentions
-- (NSString *)getRepliesSinceID:(MGTwitterEngineID)sinceID withMaximumID:(MGTwitterEngineID)maxID startingAtPage:(int)pageNum count:(int)count; // statuses/mentions
+- (NSString *)getMentionsStartingAtPage:(int)pageNum; // statuses/mentions
+- (NSString *)getMentionsSinceID:(MGTwitterEngineID)sinceID startingAtPage:(int)pageNum count:(int)count; // statuses/mentions
+- (NSString *)getMentionsSinceID:(MGTwitterEngineID)sinceID withMaximumID:(MGTwitterEngineID)maxID startingAtPage:(int)pageNum count:(int)count; // statuses/mentions
+
+// replies are deprecated. mentions can be used instead.
+- (NSString *)getRepliesStartingAtPage:(int)pageNum DEPRECATED_ATTRIBUTE; // statuses/replies
+- (NSString *)getRepliesSinceID:(MGTwitterEngineID)sinceID startingAtPage:(int)pageNum count:(int)count DEPRECATED_ATTRIBUTE; // statuses/replies
+- (NSString *)getRepliesSinceID:(MGTwitterEngineID)sinceID withMaximumID:(MGTwitterEngineID)maxID startingAtPage:(int)pageNum count:(int)count DEPRECATED_ATTRIBUTE; // statuses/replies
 
 - (NSString *)getRetweetsForID:(MGTwitterEngineID)updateID;
 - (NSString *)getRetweetsForID:(MGTwitterEngineID)updateID startingAtPage:(int)page count:(int)count;

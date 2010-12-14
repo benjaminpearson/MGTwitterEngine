@@ -39,6 +39,7 @@ typedef enum _MGTwitterEngineDeliveryOptions {
 // the deliveryOption is configured for MGTwitterEngineDeliveryAllResults (the default), a
 // collection of all results is also returned.
 - (void)statusesReceived:(NSArray *)statuses forRequest:(NSString *)connectionIdentifier;
+- (void)mentionsReceived:(NSArray *)mentions forRequest:(NSString *)connectionIdentifier;
 - (void)directMessagesReceived:(NSArray *)messages forRequest:(NSString *)connectionIdentifier;
 - (void)userInfoReceived:(NSArray *)userInfo forRequest:(NSString *)connectionIdentifier;
 - (void)userListsReceived:(NSArray *)userInfo forRequest:(NSString *)connectionIdentifier;
