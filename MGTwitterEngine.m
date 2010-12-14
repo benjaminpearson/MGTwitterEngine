@@ -1363,6 +1363,32 @@
 #pragma mark -
 
 
+- (NSString *)getRelatedForID:(MGTwitterEngineID)updateID
+{
+    return [self getRelatedForID:updateID startingAtPage:0 count:0]; // zero means default
+}
+
+- (NSString *)getRelatedForID:(MGTwitterEngineID)updateID startingAtPage:(int)page count:(int)count
+{
+    NSString *path = [NSString stringWithFormat:@"related_results/show/%llu.%@", updateID, API_FORMAT];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:0];
+    if (page > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
+    }
+    if (count > 0) {
+        [params setObject:[NSString stringWithFormat:@"%d", count] forKey:@"count"];
+    }
+    
+    return [self _sendRequestWithMethod:nil path:path queryParameters:params body:nil 
+                            requestType:MGTwitterRelatedRequest 
+                           responseType:MGTwitterStatuses];
+}
+
+
+#pragma mark -
+
+
 - (NSString *)deleteUpdate:(MGTwitterEngineID)updateID
 {
     NSString *path = [NSString stringWithFormat:@"statuses/destroy/%llu.%@", updateID, API_FORMAT];

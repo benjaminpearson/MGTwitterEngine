@@ -119,6 +119,10 @@
 - (NSString *)getRetweetsForID:(MGTwitterEngineID)updateID;
 - (NSString *)getRetweetsForID:(MGTwitterEngineID)updateID startingAtPage:(int)page count:(int)count;
 
+// #newtwitter is required for this "related statuses" api call
+- (NSString *)getRelatedForID:(MGTwitterEngineID)updateID;
+- (NSString *)getRelatedForID:(MGTwitterEngineID)updateID startingAtPage:(int)page count:(int)count;
+
 - (NSString *)deleteUpdate:(MGTwitterEngineID)updateID; // statuses/destroy
 
 - (NSString *)getFeaturedUsers; // statuses/features (undocumented, returns invalid JSON data)

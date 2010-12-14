@@ -19,6 +19,7 @@ typedef enum _MGTwitterRequestType {
 	MGTwitterUpdateDeleteRequest, // delete an update for the current user using the specified id
     MGTwitterRepliesRequest, // latest reply status for the current user
 	MGTwitterRetweetsRequest, // retweets for the specified status id	
+	MGTwitterRelatedRequest, // related statuses (retweets, mentions, replies) for specified status id
 	MGTwitterRetweetSendRequest, // send a new retweet for the current user
     MGTwitterFeaturedUsersRequest, // latest status from featured users
 	MGTwitterFriendUpdatesRequest, // last status for the people that the current user follows
