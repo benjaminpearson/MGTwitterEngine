@@ -116,6 +116,9 @@
 - (NSString *)getRepliesSinceID:(MGTwitterEngineID)sinceID startingAtPage:(int)pageNum count:(int)count; // statuses/mentions
 - (NSString *)getRepliesSinceID:(MGTwitterEngineID)sinceID withMaximumID:(MGTwitterEngineID)maxID startingAtPage:(int)pageNum count:(int)count; // statuses/mentions
 
+- (NSString *)getRetweetsForID:(MGTwitterEngineID)updateID;
+- (NSString *)getRetweetsForID:(MGTwitterEngineID)updateID startingAtPage:(int)page count:(int)count;
+
 - (NSString *)deleteUpdate:(MGTwitterEngineID)updateID; // statuses/destroy
 
 - (NSString *)getFeaturedUsers; // statuses/features (undocumented, returns invalid JSON data)
