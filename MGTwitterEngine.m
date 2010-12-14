@@ -1611,6 +1611,25 @@
                            responseType:MGTwitterUserLists];
 }
 
+- (NSString *)deleteListForUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/lists/%llu.%@", username, listID, API_FORMAT];
+	NSLog(@"%@", path);
+    NSMutableDictionary *queryParameters = [NSMutableDictionary dictionaryWithCapacity:0];
+	[queryParameters setObject:@"DELETE" forKey:@"_method"];
+	
+    NSString *body = [self _queryStringWithBase:nil parameters:queryParameters prefixed:NO];
+    
+    return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 
+                        queryParameters:queryParameters body:body 
+                            requestType:MGTwitterUserListDelete
+                           responseType:MGTwitterUserLists];
+}
+
 - (NSString *)getListForUser:(NSString *)username withID:(MGTwitterEngineID)listID
 {
 	if (!username || !listID) {

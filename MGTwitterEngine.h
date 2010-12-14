@@ -148,6 +148,9 @@
 //	update an existing list
 - (NSString *)updateListForUser:(NSString *)username withID:(MGTwitterEngineID)listID withOptions:(NSDictionary *)options;
 
+//	delete an existing list
+- (NSString *)deleteListForUser:(NSString *)username withID:(MGTwitterEngineID)listID;
+
 //	Show the specified list. Private lists will only be shown if the authenticated user owns the specified list.
 - (NSString *)getListForUser:(NSString *)username withID:(MGTwitterEngineID)listID;
 
