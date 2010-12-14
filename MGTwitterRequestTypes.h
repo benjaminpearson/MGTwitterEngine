@@ -51,7 +51,9 @@ typedef enum _MGTwitterRequestType {
 	MGTwitterFollowerIDsRequest, // request the numeric IDs of the followers of the specified user
 	MGTwitterUserListsRequest,
 	MGTwitterUserListCreate,
-	MGTwitterUserListDelete,	
+	MGTwitterUserListDelete,
+	MGTwitterUserListSubscribe,
+	MGTwitterUserListUnsubscribe,	
 #if YAJL_AVAILABLE || TOUCHJSON_AVAILABLE
 	MGTwitterSearchRequest, // performing a search
 	MGTwitterSearchCurrentTrendsRequest, // getting the current trends

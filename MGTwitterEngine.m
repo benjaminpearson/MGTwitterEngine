@@ -1697,6 +1697,41 @@
                            responseType:MGTwitterUserLists];
 }
 
+- (NSString *)subscribeListForUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/%llu/subscribers.%@", username, listID, API_FORMAT];
+
+    NSString *body = [self _queryStringWithBase:nil parameters:nil prefixed:NO];
+    
+    return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 
+                        queryParameters:nil body:body 
+                            requestType:MGTwitterUserListSubscribe
+                           responseType:MGTwitterUserLists];
+}
+
+- (NSString *)unsubscribeListForUser:(NSString *)username withID:(MGTwitterEngineID)listID
+{
+	if (!username || !listID) {
+		NSLog(@"returning nil");
+		return nil;
+	}
+	NSString *path = [NSString stringWithFormat:@"%@/%llu/subscribers.%@", username, listID, API_FORMAT];
+	
+	NSMutableDictionary *queryParameters = [NSMutableDictionary dictionaryWithCapacity:0];
+	[queryParameters setObject:@"DELETE" forKey:@"_method"];
+	
+    NSString *body = [self _queryStringWithBase:nil parameters:queryParameters prefixed:NO];
+    
+    return [self _sendRequestWithMethod:HTTP_POST_METHOD path:path 
+                        queryParameters:queryParameters body:body 
+                            requestType:MGTwitterUserListUnsubscribe
+                           responseType:MGTwitterUserLists];
+}
+
 #pragma mark Friendship methods
 
 
